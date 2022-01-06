@@ -1,0 +1,5 @@
+#Ignore Mac stuff
+.DS_Store
+
+#Node stuff
+node_modules/
