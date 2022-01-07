@@ -21,6 +21,7 @@
         box-sizing: border-box;
         backdrop-filter: blur(10px);
       }
+
       #input {
         border: none;
         padding: 0 1rem;
@@ -28,9 +29,11 @@
         border-radius: 2rem;
         margin: 0.25rem;
       }
+
       #input:focus {
         outline: none;
       }
+
       #form > button {
         background: #333;
         border: none;
@@ -46,21 +49,32 @@
         margin: 0;
         padding: 0;
       }
+
       #messages > li {
         padding: 0.5rem 1rem;
       }
+
       #messages > li:nth-child(odd) {
         background: #efefef;
       }
+
+      .webgl {
+        position: fixed;
+        top: 0;
+        left: 0;
+        outline: none;
+      }
     </style>
+    <script src="/socket.io/socket.io.js"></script>
   </head>
+
   <body>
+    <canvas class="webgl"></canvas>
     <ul id="messages"></ul>
     <form id="form" action="">
       <input id="input" autocomplete="off" />
       <button>Send</button>
     </form>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="./src/main.js"></script>
+    <script type="module" src="./src/main.js"></script>
   </body>
 </html>

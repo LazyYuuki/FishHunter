@@ -1,22 +1,23 @@
+import path from "path"
+import express from "express"
+import { Server } from "socket.io"
+import http from "http"
+
 const port = process.env.PORT || 80
-const path = require('path')
-const express = require('express')
 const app = express()
-const http = require('http')
 const server = http.createServer(app)
-const { Server } = require("socket.io")
 const io = new Server(server)
 
-// app.get("/", (req, res) => {
-//   res.sendFile("/client/index.html", { "root": "../" });
-//   console.log(path.dirname(__dirname))
-// })
+const clientPath = '../client'
 
-const clientPath = path.dirname(__dirname) + '/client'
-
+// Send the client package to client
 app.use(express.static(clientPath));
 
-io.on("connection", socket => {
+// Process on connection
+io.on("connection", async socket => {
+  const sockets = await io.fetchSockets()
+
+  io.emit("chat message", "User " + socket.id + " just join")
   console.log("a user connected")
 
   socket.on("disconnect", () => {
@@ -26,9 +27,9 @@ io.on("connection", socket => {
   socket.on('chat message', (msg) => {
     io.emit("chat message", msg)
   });
-
-
 })
+
+
 
 server.listen(port, () => {
   console.log('listening on *:' + port);
