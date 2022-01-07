@@ -47,7 +47,6 @@ io.on("connection", socket => {
   })
 
   socket.on("payload", payload => {
-    serverQueue.enqueue(payload)
     console.log(serverQueue)
     io.emit("message", JSON.stringify(payload))
   })
