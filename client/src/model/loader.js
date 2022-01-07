@@ -15,11 +15,11 @@ export default {
   },
 
   loadCharacter(charInfo) {
-    console.log(charInfo)
+    // console.log(charInfo)
     return loader.loadAsync(`../../resources/${charInfo.name}.gltf`).then(gltf => {
       let halfExtents = charInfo.halfExtents;
       let model = gltf.scene;
-      console.log(gltf)
+      // console.log(gltf)
       let body = new CANNON.Body({
         mass: charInfo.mass,
         shape: new CANNON.Box(new CANNON.Vec3(halfExtents.x, halfExtents.y, halfExtents.z)),

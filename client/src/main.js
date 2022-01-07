@@ -6,6 +6,14 @@ import * as THREE from 'three'
 import { GameEngine } from './engine/game.js';
 import server from "./socket/socket.js"
 
+const fishType = [
+  'catfishAnim',
+  "croc",
+  "tuna",
+  "turtle",
+  "swordfish",
+]
+
 server()
 
 const characterInfos = [
@@ -80,14 +88,14 @@ async function init() {
 
   gameEngine.spawnCharacter('raft', new THREE.Vector3());
   setInterval(() => {
-    console.log("SPAWMING CATFISH")
+    // console.log("SPAWMING CATFISH")
     let pos_x = getRandomArbitrary(-80, 80);
     let pos_z = getRandomArbitrary(-80, 80);
     gameEngine.spawnCharacter(
-      'catfishAnim',
+      fishType[Math.floor(Math.random() * fishType.length)],
       new THREE.Vector3(pos_x, -4, pos_z)
     );
-  }, 1000);
+  }, 3000);
 
 }
 

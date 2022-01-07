@@ -30,11 +30,11 @@ const loader = new three_examples_jsm_loaders_GLTFLoader_js__WEBPACK_IMPORTED_MO
   },
 
   loadCharacter(charInfo) {
-    console.log(charInfo)
+    // console.log(charInfo)
     return loader.loadAsync(`../../resources/${charInfo.name}.gltf`).then(gltf => {
       let halfExtents = charInfo.halfExtents;
       let model = gltf.scene;
-      console.log(gltf)
+      // console.log(gltf)
       let body = new cannon_es__WEBPACK_IMPORTED_MODULE_3__.Body({
         mass: charInfo.mass,
         shape: new cannon_es__WEBPACK_IMPORTED_MODULE_3__.Box(new cannon_es__WEBPACK_IMPORTED_MODULE_3__.Vec3(halfExtents.x, halfExtents.y, halfExtents.z)),
@@ -74523,21 +74523,21 @@ class GameEngine {
     const characters = await Promise.all(
       infos.map(info => _model_loader_js__WEBPACK_IMPORTED_MODULE_0__["default"].loadCharacter(info))
     );
-    console.log(characters)
+    // console.log(characters)
     console.log("FOR LOOP")
     for (const character of characters) {
-      console.log(character)
+      // console.log(character)
       this.characterMap.set(character.info.name, character);
     }
   }
 
-  spawnCharacter(name,pos) {
+  spawnCharacter(name, pos) {
     console.log(this.characterMap)
     if (!this.characterMap.has(name)) {
       return;
     }
     let character = this.characterMap.get(name);
-    console.log(character)
+    // console.log(character)
     let spawned = _model_loader_js__WEBPACK_IMPORTED_MODULE_0__["default"].cloneCharacter(character);
     spawned.model.position.copy(pos);
     spawned.body.position.set(pos.x, pos.y, pos.z);
@@ -79537,7 +79537,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-(0,_socket_socket_js__WEBPACK_IMPORTED_MODULE_5__["default"])()
+const fishType = [
+  'catfishAnim',
+  "croc",
+  "tuna",
+  "turtle",
+  "swordfish",
+]
+
+;(0,_socket_socket_js__WEBPACK_IMPORTED_MODULE_5__["default"])()
 
 const characterInfos = [
   new _model_character_js__WEBPACK_IMPORTED_MODULE_3__.CharacterInfo(
@@ -79611,14 +79619,14 @@ async function init() {
 
   gameEngine.spawnCharacter('raft', new three__WEBPACK_IMPORTED_MODULE_6__.Vector3());
   setInterval(() => {
-    console.log("SPAWMING CATFISH")
+    // console.log("SPAWMING CATFISH")
     let pos_x = getRandomArbitrary(-80, 80);
     let pos_z = getRandomArbitrary(-80, 80);
     gameEngine.spawnCharacter(
-      'catfishAnim',
+      fishType[Math.floor(Math.random() * fishType.length)],
       new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(pos_x, -4, pos_z)
     );
-  }, 1000);
+  }, 3000);
 
 }
 

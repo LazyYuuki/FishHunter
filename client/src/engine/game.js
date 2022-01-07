@@ -24,21 +24,21 @@ export class GameEngine {
     const characters = await Promise.all(
       infos.map(info => ModelLoader.loadCharacter(info))
     );
-    console.log(characters)
+    // console.log(characters)
     console.log("FOR LOOP")
     for (const character of characters) {
-      console.log(character)
+      // console.log(character)
       this.characterMap.set(character.info.name, character);
     }
   }
 
-  spawnCharacter(name,pos) {
+  spawnCharacter(name, pos) {
     console.log(this.characterMap)
     if (!this.characterMap.has(name)) {
       return;
     }
     let character = this.characterMap.get(name);
-    console.log(character)
+    // console.log(character)
     let spawned = ModelLoader.cloneCharacter(character);
     spawned.model.position.copy(pos);
     spawned.body.position.set(pos.x, pos.y, pos.z);
