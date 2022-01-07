@@ -7,19 +7,18 @@ const app = express()
 const server = http.createServer(app)
 const io = new Server(server)
 
-const clientPath = '../client'
+const clientPath = '../dist'
 
 // Send the client package to client
 app.use(express.static(clientPath));
 
 // Process on connection
-io.on("connection", async socket => {
+io.on("connection", socket => {
 
-  io.emit("chat message", "User " + socket.id + " just join")
-  console.log("a user connected")
+  io.emit("chat message", "Socket " + socket.id + " just join")
 
   socket.on("disconnect", () => {
-    console.log("user disconnected")
+    io.emit("chat message", "Socket " + socket.id + " just left")
   })
 
   socket.on('chat message', (msg) => {

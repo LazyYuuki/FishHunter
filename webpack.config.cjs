@@ -4,7 +4,7 @@ module.exports = {
   "mode": "none",
   "entry": "./client/src/main.js",
   "output": {
-    "path": __dirname + '/client/dist',
+    "path": __dirname + '/dist',
     "filename": "main.js"
   },
   devServer: {

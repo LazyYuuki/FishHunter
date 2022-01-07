@@ -19,11 +19,12 @@ export class Character {
   // model: THREE.Group;
 
   constructor(
-    name, body, model
+    name, body, model, curPos
     // name: string, body: CANNON.Body, model: THREE.Group
   ) {
     this.name = name;
     this.body = body;
     this.model = model;
+    this.curPos = curPos;
   }
 }

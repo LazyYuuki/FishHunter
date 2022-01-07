@@ -1,5 +1,5 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-import * as CANNON from "cannon";
+import * as CANNON from "cannon-es";
 import { Character } from './character.js';
 
 const loader = new GLTFLoader();
@@ -21,12 +21,12 @@ export default {
       let body = new CANNON.Body({
         mass: charInfo.mass,
         shape: new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5)),
-        collisionResponse: 0,
+        collisionResponse: false,
       });
       let startPos = charInfo.startPos;
       model.position.copy(startPos);
       body.position.set(startPos.x, startPos.y, startPos.z);
-      return new Character(charInfo.name, body, model);
+      return new Character(charInfo.name, body, model, startPos);
     });
   }
   // loadCharacter(charInfo: CharacterInfo): Promise<Character> {

@@ -5,57 +5,47 @@ import { CharacterInfo } from './model/character.js';
 import * as keyboardJS from 'keyboardjs'
 import * as THREE from 'three'
 
-var socket = io();
+import server from "./socket/socket.js"
 
-var form = document.getElementById('form');
-var input = document.getElementById('input');
+server()
 
-form.addEventListener('submit', function (e) {
-  e.preventDefault();
-  if (input.value) {
-    socket.emit('chat message', input.value);
-    input.value = '';
-  }
-});
+// function randomParameter() {
+//   return Math.random(1, 100) * 20, Math.random(1, 100) * 20, Math.random(1, 100) * 20
+// }
 
-// socket.on('chat message', function (msg) {
-//   var item = document.createElement('li');
-//   item.textContent = msg;
-//   messages.appendChild(item);
-//   window.scrollTo(0, document.body.scrollHeight);
-// });
+// const characterInfos = [
+//   new CharacterInfo('raft', 10, new THREE.Vector3(0, 0, 0)),
+  // new CharacterInfo('catfishAnim', 10, new THREE.Vector3(randomParameter())),
+  // new CharacterInfo('croc', 10, new THREE.Vector3(randomParameter())),
+  // new CharacterInfo('swordfish', 10, new THREE.Vector3(randomParameter())),
+  // new CharacterInfo('tuna', 10, new THREE.Vector3(randomParameter())),
+  // new CharacterInfo('turtle', 10, new THREE.Vector3(randomParameter())),
+// ];
 
-function randomParameter() {
-  return Math.random(1, 20), Math.random(1, 20), Math.random(1, 20)
-}
+// function startAnimation(physicsEngine) {
+//   physicsEngine.animate();
+//   window.requestAnimationFrame(() => startAnimation(physicsEngine));
+// }
 
-const characterInfos = [
-  new CharacterInfo('catfishAnim', 10, new THREE.Vector3(randomParameter())),
-  new CharacterInfo('croc', 10, new THREE.Vector3(randomParameter())),
-  new CharacterInfo('raft', 10, new THREE.Vector3(randomParameter())),
-  new CharacterInfo('swordfish', 10, new THREE.Vector3(randomParameter())),
-  new CharacterInfo('tuna', 10, new THREE.Vector3(randomParameter())),
-  new CharacterInfo('turtle', 10, new THREE.Vector3(randomParameter())),
-];
+// async function init() {
+//   const characters = await Promise.all(characterInfos.map(info => ModelLoader.loadCharacter(info)));
+//   const env = await ModelLoader.loadEnv();
+//   const renderEngine = new RenderEngine(
+//     document.querySelector('canvas.webgl'),
+//     { width: window.innerWidth, height: window.innerHeight },
+//     characters,
+//     env
+//   );
+//   const physicsEngine = new PhysicsEngine(renderEngine, characters);
+//   window.addEventListener('resize', () => {
+//     renderEngine.resize({ width: window.innerWidth, height: window.innerHeight });
+//   });
+//   keyboardJS.bind('w', () => {
+//     renderEngine.moveObject(
+//       "forward"
+//     )
+//   });
 
-function startAnimation(physicsEngine) {
-  physicsEngine.animate();
-  window.requestAnimationFrame(() => startAnimation(physicsEngine));
-}
-
-async function init() {
-  const characters = await Promise.all(characterInfos.map(info => ModelLoader.loadCharacter(info)));
-  const env = await ModelLoader.loadEnv();
-  const renderEngine = new RenderEngine(
-    document.querySelector('canvas.webgl'),
-    { width: window.innerWidth, height: window.innerHeight },
-    characters,
-    env
-  );
-  const physicsEngine = new PhysicsEngine(renderEngine, characters);
-  window.addEventListener('resize', () => {
-    renderEngine.resize({ width: window.innerWidth, height: window.innerHeight });
-  });
   // keyboardJS.bind('w', () => {
   //   renderEngine.moveCamera({ x: 0, y: 0, z: -1 });
   // });
@@ -72,7 +62,7 @@ async function init() {
   //   renderEngine.moveCamera({ x: 1, y: 0, z: 0 });
   // });
 
-  startAnimation(physicsEngine);
-}
+//   startAnimation(physicsEngine);
+// }
 
-init();
+// init();

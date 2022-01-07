@@ -60,4 +60,16 @@ export class RenderEngine {
   moveCamera(vec) {
     this.camera.position.add(new THREE.Vector3(vec.x, vec.y, vec.z));
   }
+
+  moveObject(direction) {
+    switch (direction) {
+      case "forward":
+        this.scene.children[0].position = new THREE.Vector3(0, 0, -10);
+        console.log(this.scene.children[0].position)
+        console.log("forward")
+        break;
+      default:
+        break;
+    }
+  }
 }

@@ -1,5 +1,4 @@
-// import * as CANNON from "cannon-es";
-import * as CANNON from "cannon";
+import * as CANNON from "cannon-es";
 
 const timeStep = 1 / 60;
 let lastCallTime;
