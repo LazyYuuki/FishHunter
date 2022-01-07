@@ -73,18 +73,21 @@ async function init() {
   // keyboardJS.bind('d', () => {
   //     renderEngine.moveCamera({x: 1, y: 0, z: 0});
   // });
+
+  console.log("Loading all characters")
   await gameEngine.loadCharacters(characterInfos);
   startAnimation(gameEngine);
 
   gameEngine.spawnCharacter('raft', new THREE.Vector3());
   setInterval(() => {
+    console.log("SPAWMING CATFISH")
     let pos_x = getRandomArbitrary(-80, 80);
     let pos_z = getRandomArbitrary(-80, 80);
     gameEngine.spawnCharacter(
       'catfishAnim',
       new THREE.Vector3(pos_x, -4, pos_z)
     );
-  }, 2000);
+  }, 1000);
 
 }
 

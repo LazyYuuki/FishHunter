@@ -21,7 +21,7 @@ export class CharacterInfo {
 export class Character {
 
   constructor(
-    name, info, body, model
+    info, body, model
   ) {
     this.info = info;
     this.body = body;

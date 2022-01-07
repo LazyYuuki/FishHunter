@@ -1,6 +1,7 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import * as CANNON from "cannon-es";
 import { Character } from './character.js';
+import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js';
 
 const loader = new GLTFLoader();
 
@@ -14,9 +15,11 @@ export default {
   },
 
   loadCharacter(charInfo) {
+    console.log(charInfo)
     return loader.loadAsync(`../../resources/${charInfo.name}.gltf`).then(gltf => {
       let halfExtents = charInfo.halfExtents;
       let model = gltf.scene;
+      console.log(gltf)
       let body = new CANNON.Body({
         mass: charInfo.mass,
         shape: new CANNON.Box(new CANNON.Vec3(halfExtents.x, halfExtents.y, halfExtents.z)),
