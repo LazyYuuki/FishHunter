@@ -3,3 +3,7 @@
 
 #Node stuff
 node_modules/
+
+#lock file
+package-lock.json
+yarn.lock
