@@ -7,39 +7,39 @@ const loader = new GLTFLoader();
 export default {
   loadEnv() {
     return loader.loadAsync(`../../resources/env.gltf`).then(gltf => {
-      return gltf.scene;
+      let model = gltf.scene;
+      model.scale.setScalar(10);
+      return model;
     });
   },
-  // loadEnv(): Promise<THREE.Group> {
-  //   return loader.loadAsync(`/env.gltf`).then(gltf => {
-  //     return gltf.scene;
-  //   });
-  // },
+
   loadCharacter(charInfo) {
     return loader.loadAsync(`../../resources/${charInfo.name}.gltf`).then(gltf => {
+      let halfExtents = charInfo.halfExtents;
       let model = gltf.scene;
       let body = new CANNON.Body({
         mass: charInfo.mass,
-        shape: new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5)),
-        collisionResponse: false,
+        shape: new CANNON.Box(new CANNON.Vec3(halfExtents.x, halfExtents.y, halfExtents.z)),
+        collisionResponse: false
       });
       let startPos = charInfo.startPos;
+      model.scale.setScalar(charInfo.scale);
       model.position.copy(startPos);
       body.position.set(startPos.x, startPos.y, startPos.z);
-      return new Character(charInfo.name, body, model, startPos);
+      return new Character(charInfo.name, charInfo, body, model);
     });
+  },
+
+  cloneCharacter(character) {
+    let info = character.info;
+    let halfExtents = info.halfExtents;
+    let model = character.model.clone();
+    let body = new CANNON.Body({
+      mass: info.mass,
+      shape: new CANNON.Box(new CANNON.Vec3(halfExtents.x, halfExtents.y, halfExtents.z)),
+      collisionResponse: false
+    });
+    return new Character(info.name, info, body, model);
   }
-  // loadCharacter(charInfo: CharacterInfo): Promise<Character> {
-  //   return loader.loadAsync(`/${charInfo.name}.gltf`).then(gltf => {
-  //     let model = gltf.scene;
-  //     let body = new CANNON.Body({
-  //       mass: charInfo.mass,
-  //       shape: new CANNON.Sphere(1)
-  //     });
-  //     let startPos = charInfo.startPos;
-  //     model.position.copy(startPos);
-  //     body.position.set(startPos.x, startPos.y, startPos.z);
-  //     return new Character(charInfo.name, body, model);
-  //   });
-  // }
+
 };

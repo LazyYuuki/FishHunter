@@ -1,30 +1,31 @@
 export class CharacterInfo {
   // name: string;
   // mass: number;
+  // scale: number;
   // startPos: THREE.Vector3;
+  // halfExtents: THREE.Vector3;
 
   constructor(
-    name, mass, startPos
-    // name: string, mass: number, startPos: THREE.Vector3
+    name, mass, scale, startPos, halfExtents
+    // name: string, mass: number, scale: number, startPos: THREE.Vector3, 
+    //   halfExtents: THREE.Vector3
   ) {
     this.name = name;
     this.mass = mass;
+    this.scale = scale;
     this.startPos = startPos;
+    this.halfExtents = halfExtents;
   }
 }
 
 export class Character {
-  // name: string;
-  // body: CANNON.Body;
-  // model: THREE.Group;
 
   constructor(
-    name, body, model, curPos
-    // name: string, body: CANNON.Body, model: THREE.Group
+    name, info, body, model
   ) {
     this.name = name;
+    this.info = info;
     this.body = body;
     this.model = model;
-    this.curPos = curPos;
   }
 }
