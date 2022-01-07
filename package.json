@@ -13,7 +13,13 @@
     "socket.io": "^4.4.1",
     "three": "^0.136.0"
   },
+  "scripts": {
+    "build": "webpack --config webpack.config.js"
+  },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.7.2"
   }
 }

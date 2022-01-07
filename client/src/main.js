@@ -1,8 +1,7 @@
-import './style.css'
-import ModelLoader from './model/loader'
-import { RenderEngine } from './engine/render'
-import { PhysicsEngine } from './engine/physics';
-import { CharacterInfo } from './model/character';
+import ModelLoader from './model/loader.js'
+import { RenderEngine } from './engine/render.js'
+import { PhysicsEngine } from './engine/physics.js';
+import { CharacterInfo } from './model/character.js';
 import * as keyboardJS from 'keyboardjs'
 import * as THREE from 'three'
 
