@@ -6,7 +6,7 @@ const loader = new GLTFLoader();
 
 export default {
   loadEnv() {
-    return loader.loadAsync(`/env.gltf`).then(gltf => {
+    return loader.loadAsync(`../../resources/env.gltf`).then(gltf => {
       return gltf.scene;
     });
   },
@@ -16,11 +16,12 @@ export default {
   //   });
   // },
   loadCharacter(charInfo) {
-    return loader.loadAsync(`/${charInfo.name}.gltf`).then(gltf => {
+    return loader.loadAsync(`../../resources/${charInfo.name}.gltf`).then(gltf => {
       let model = gltf.scene;
       let body = new CANNON.Body({
         mass: charInfo.mass,
-        shape: new CANNON.Sphere(1)
+        shape: new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5)),
+        collisionResponse: 0,
       });
       let startPos = charInfo.startPos;
       model.position.copy(startPos);

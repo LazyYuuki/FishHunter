@@ -18,13 +18,13 @@ export class PhysicsEngine {
   ) {
     this.renderEngine = renderEngine;
     this.world = new CANNON.World({
-      gravity: new CANNON.Vec3(0, -9.82, 0),
+      // gravity: new CANNON.Vec3(0, -9.82, 0),
     });
     this.groundBody = new CANNON.Body({
       type: CANNON.Body.STATIC,
       shape: new CANNON.Plane()
     });
-    this.groundBody.position.set(0, 0, 0);
+    this.groundBody.position.set(0, -10, 0);
     this.groundBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0);
     this.world.addBody(this.groundBody);
     this.characters = characters;

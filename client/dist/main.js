@@ -20,7 +20,7 @@ const loader = new three_examples_jsm_loaders_GLTFLoader_js__WEBPACK_IMPORTED_MO
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   loadEnv() {
-    return loader.loadAsync(`/env.gltf`).then(gltf => {
+    return loader.loadAsync(`../../resources/env.gltf`).then(gltf => {
       return gltf.scene;
     });
   },
@@ -30,11 +30,12 @@ const loader = new three_examples_jsm_loaders_GLTFLoader_js__WEBPACK_IMPORTED_MO
   //   });
   // },
   loadCharacter(charInfo) {
-    return loader.loadAsync(`/${charInfo.name}.gltf`).then(gltf => {
+    return loader.loadAsync(`../../resources/${charInfo.name}.gltf`).then(gltf => {
       let model = gltf.scene;
       let body = new cannon__WEBPACK_IMPORTED_MODULE_1__.Body({
         mass: charInfo.mass,
-        shape: new cannon__WEBPACK_IMPORTED_MODULE_1__.Sphere(1)
+        shape: new cannon__WEBPACK_IMPORTED_MODULE_1__.Box(new cannon__WEBPACK_IMPORTED_MODULE_1__.Vec3(0.5, 0.5, 0.5)),
+        collisionResponse: 0,
       });
       let startPos = charInfo.startPos;
       model.position.copy(startPos);
@@ -68929,9 +68930,9 @@ class RenderEngine {
     this.renderer.render(this.scene, this.camera);
   }
 
-  // moveCamera(vec: { x: number, y: number, z: number }) {
-  //     this.camera.position.add(new THREE.Vector3(vec.x, vec.y, vec.z));
-  // }
+  moveCamera(vec) {
+    this.camera.position.add(new three__WEBPACK_IMPORTED_MODULE_1__.Vector3(vec.x, vec.y, vec.z));
+  }
 }
 
 
@@ -70222,13 +70223,13 @@ class PhysicsEngine {
   ) {
     this.renderEngine = renderEngine;
     this.world = new cannon__WEBPACK_IMPORTED_MODULE_0__.World({
-      gravity: new cannon__WEBPACK_IMPORTED_MODULE_0__.Vec3(0, -9.82, 0),
+      // gravity: new CANNON.Vec3(0, -9.82, 0),
     });
     this.groundBody = new cannon__WEBPACK_IMPORTED_MODULE_0__.Body({
       type: cannon__WEBPACK_IMPORTED_MODULE_0__.Body.STATIC,
       shape: new cannon__WEBPACK_IMPORTED_MODULE_0__.Plane()
     });
-    this.groundBody.position.set(0, 0, 0);
+    this.groundBody.position.set(0, -10, 0);
     this.groundBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0);
     this.world.addBody(this.groundBody);
     this.characters = characters;
@@ -71446,22 +71447,24 @@ form.addEventListener('submit', function (e) {
   }
 });
 
-socket.on('chat message', function (msg) {
-  var item = document.createElement('li');
-  item.textContent = msg;
-  messages.appendChild(item);
-  window.scrollTo(0, document.body.scrollHeight);
-});
+// socket.on('chat message', function (msg) {
+//   var item = document.createElement('li');
+//   item.textContent = msg;
+//   messages.appendChild(item);
+//   window.scrollTo(0, document.body.scrollHeight);
+// });
 
-
+function randomParameter() {
+  return Math.random(1, 20), Math.random(1, 20), Math.random(1, 20)
+}
 
 const characterInfos = [
-  new _model_character_js__WEBPACK_IMPORTED_MODULE_3__.CharacterInfo('catfishAnim', 10, new three__WEBPACK_IMPORTED_MODULE_5__.Vector3()),
-  new _model_character_js__WEBPACK_IMPORTED_MODULE_3__.CharacterInfo('croc', 10, new three__WEBPACK_IMPORTED_MODULE_5__.Vector3(0, 5, 0)),
-  new _model_character_js__WEBPACK_IMPORTED_MODULE_3__.CharacterInfo('raft', 10, new three__WEBPACK_IMPORTED_MODULE_5__.Vector3()),
-  new _model_character_js__WEBPACK_IMPORTED_MODULE_3__.CharacterInfo('swordfish', 10, new three__WEBPACK_IMPORTED_MODULE_5__.Vector3()),
-  new _model_character_js__WEBPACK_IMPORTED_MODULE_3__.CharacterInfo('tuna', 10, new three__WEBPACK_IMPORTED_MODULE_5__.Vector3()),
-  new _model_character_js__WEBPACK_IMPORTED_MODULE_3__.CharacterInfo('turtle', 10, new three__WEBPACK_IMPORTED_MODULE_5__.Vector3()),
+  new _model_character_js__WEBPACK_IMPORTED_MODULE_3__.CharacterInfo('catfishAnim', 10, new three__WEBPACK_IMPORTED_MODULE_5__.Vector3(randomParameter())),
+  new _model_character_js__WEBPACK_IMPORTED_MODULE_3__.CharacterInfo('croc', 10, new three__WEBPACK_IMPORTED_MODULE_5__.Vector3(randomParameter())),
+  new _model_character_js__WEBPACK_IMPORTED_MODULE_3__.CharacterInfo('raft', 10, new three__WEBPACK_IMPORTED_MODULE_5__.Vector3(randomParameter())),
+  new _model_character_js__WEBPACK_IMPORTED_MODULE_3__.CharacterInfo('swordfish', 10, new three__WEBPACK_IMPORTED_MODULE_5__.Vector3(randomParameter())),
+  new _model_character_js__WEBPACK_IMPORTED_MODULE_3__.CharacterInfo('tuna', 10, new three__WEBPACK_IMPORTED_MODULE_5__.Vector3(randomParameter())),
+  new _model_character_js__WEBPACK_IMPORTED_MODULE_3__.CharacterInfo('turtle', 10, new three__WEBPACK_IMPORTED_MODULE_5__.Vector3(randomParameter())),
 ];
 
 function startAnimation(physicsEngine) {
@@ -71482,21 +71485,21 @@ async function init() {
   window.addEventListener('resize', () => {
     renderEngine.resize({ width: window.innerWidth, height: window.innerHeight });
   });
-  keyboardjs__WEBPACK_IMPORTED_MODULE_4__.bind('w', () => {
-    renderEngine.moveCamera({ x: 0, y: 0, z: -1 });
-  });
+  // keyboardJS.bind('w', () => {
+  //   renderEngine.moveCamera({ x: 0, y: 0, z: -1 });
+  // });
 
-  keyboardjs__WEBPACK_IMPORTED_MODULE_4__.bind('s', () => {
-    renderEngine.moveCamera({ x: 0, y: 0, z: 1 });
-  });
+  // keyboardJS.bind('s', () => {
+  //   renderEngine.moveCamera({ x: 0, y: 0, z: 1 });
+  // });
 
-  keyboardjs__WEBPACK_IMPORTED_MODULE_4__.bind('a', () => {
-    renderEngine.moveCamera({ x: -1, y: 0, z: 0 });
-  });
+  // keyboardJS.bind('a', () => {
+  //   renderEngine.moveCamera({ x: -1, y: 0, z: 0 });
+  // });
 
-  keyboardjs__WEBPACK_IMPORTED_MODULE_4__.bind('d', () => {
-    renderEngine.moveCamera({ x: 1, y: 0, z: 0 });
-  });
+  // keyboardJS.bind('d', () => {
+  //   renderEngine.moveCamera({ x: 1, y: 0, z: 0 });
+  // });
 
   startAnimation(physicsEngine);
 }

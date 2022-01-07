@@ -57,7 +57,7 @@ export class RenderEngine {
     this.renderer.render(this.scene, this.camera);
   }
 
-  // moveCamera(vec: { x: number, y: number, z: number }) {
-  //     this.camera.position.add(new THREE.Vector3(vec.x, vec.y, vec.z));
-  // }
+  moveCamera(vec) {
+    this.camera.position.add(new THREE.Vector3(vec.x, vec.y, vec.z));
+  }
 }

@@ -18,22 +18,24 @@ form.addEventListener('submit', function (e) {
   }
 });
 
-socket.on('chat message', function (msg) {
-  var item = document.createElement('li');
-  item.textContent = msg;
-  messages.appendChild(item);
-  window.scrollTo(0, document.body.scrollHeight);
-});
+// socket.on('chat message', function (msg) {
+//   var item = document.createElement('li');
+//   item.textContent = msg;
+//   messages.appendChild(item);
+//   window.scrollTo(0, document.body.scrollHeight);
+// });
 
-
+function randomParameter() {
+  return Math.random(1, 20), Math.random(1, 20), Math.random(1, 20)
+}
 
 const characterInfos = [
-  new CharacterInfo('catfishAnim', 10, new THREE.Vector3()),
-  new CharacterInfo('croc', 10, new THREE.Vector3(0, 5, 0)),
-  new CharacterInfo('raft', 10, new THREE.Vector3()),
-  new CharacterInfo('swordfish', 10, new THREE.Vector3()),
-  new CharacterInfo('tuna', 10, new THREE.Vector3()),
-  new CharacterInfo('turtle', 10, new THREE.Vector3()),
+  new CharacterInfo('catfishAnim', 10, new THREE.Vector3(randomParameter())),
+  new CharacterInfo('croc', 10, new THREE.Vector3(randomParameter())),
+  new CharacterInfo('raft', 10, new THREE.Vector3(randomParameter())),
+  new CharacterInfo('swordfish', 10, new THREE.Vector3(randomParameter())),
+  new CharacterInfo('tuna', 10, new THREE.Vector3(randomParameter())),
+  new CharacterInfo('turtle', 10, new THREE.Vector3(randomParameter())),
 ];
 
 function startAnimation(physicsEngine) {
@@ -54,21 +56,21 @@ async function init() {
   window.addEventListener('resize', () => {
     renderEngine.resize({ width: window.innerWidth, height: window.innerHeight });
   });
-  keyboardJS.bind('w', () => {
-    renderEngine.moveCamera({ x: 0, y: 0, z: -1 });
-  });
+  // keyboardJS.bind('w', () => {
+  //   renderEngine.moveCamera({ x: 0, y: 0, z: -1 });
+  // });
 
-  keyboardJS.bind('s', () => {
-    renderEngine.moveCamera({ x: 0, y: 0, z: 1 });
-  });
+  // keyboardJS.bind('s', () => {
+  //   renderEngine.moveCamera({ x: 0, y: 0, z: 1 });
+  // });
 
-  keyboardJS.bind('a', () => {
-    renderEngine.moveCamera({ x: -1, y: 0, z: 0 });
-  });
+  // keyboardJS.bind('a', () => {
+  //   renderEngine.moveCamera({ x: -1, y: 0, z: 0 });
+  // });
 
-  keyboardJS.bind('d', () => {
-    renderEngine.moveCamera({ x: 1, y: 0, z: 0 });
-  });
+  // keyboardJS.bind('d', () => {
+  //   renderEngine.moveCamera({ x: 1, y: 0, z: 0 });
+  // });
 
   startAnimation(physicsEngine);
 }
