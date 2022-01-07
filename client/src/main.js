@@ -10,34 +10,38 @@ server()
 
 const characterInfos = [
   new CharacterInfo(
-    'catfishAnim', 10, 1, new THREE.Vector3(0, 10, 0), new THREE.Vector3(1, 1, 1)
+    'catfishAnim', 10, 1, new THREE.Vector3(1, 1, 1)
   ),
   new CharacterInfo(
-    'croc', 10, 1, new THREE.Vector3(), new THREE.Vector3(1, 1, 1)
+    'croc', 10, 1, new THREE.Vector3(1, 1, 1)
   ),
   new CharacterInfo(
-    'raft', 10, 10, new THREE.Vector3(), new THREE.Vector3(1, 1, 1)
+    'raft', 10, 10, new THREE.Vector3(1, 1, 1)
   ),
   new CharacterInfo(
-    'swordfish', 10, 1, new THREE.Vector3(), new THREE.Vector3(1, 1, 1)
+    'swordfish', 10, 1, new THREE.Vector3(1, 1, 1)
   ),
   new CharacterInfo(
-    'tuna', 10, 1, new THREE.Vector3(), new THREE.Vector3(1, 1, 1)
+    'tuna', 10, 1, new THREE.Vector3(1, 1, 1)
   ),
   new CharacterInfo(
-    'turtle', 10, 1, new THREE.Vector3(), new THREE.Vector3(1, 1, 1)
+    'turtle', 10, 1, new THREE.Vector3(1, 1, 1)
   ),
   new CharacterInfo(
-    'Derringer', 10, 1, new THREE.Vector3(), new THREE.Vector3(1, 1, 1)
+    'Derringer', 10, 1, new THREE.Vector3(1, 1, 1)
   ),
   new CharacterInfo(
-    'machi', 10, 1, new THREE.Vector3(), new THREE.Vector3(1, 1, 1)
+    'machi', 10, 1, new THREE.Vector3(1, 1, 1)
   ),
 ];
 
 function startAnimation(gameEngine) {
   gameEngine.loop()
   window.requestAnimationFrame(() => startAnimation(gameEngine));
+}
+
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
 }
 
 async function init() {
@@ -71,6 +75,17 @@ async function init() {
   // });
   await gameEngine.loadCharacters(characterInfos);
   startAnimation(gameEngine);
+
+  gameEngine.spawnCharacter('raft', new THREE.Vector3());
+  setInterval(() => {
+    let pos_x = getRandomArbitrary(-80, 80);
+    let pos_z = getRandomArbitrary(-80, 80);
+    gameEngine.spawnCharacter(
+      'catfishAnim',
+      new THREE.Vector3(pos_x, -4, pos_z)
+    );
+  }, 2000);
+
 }
 
 init();

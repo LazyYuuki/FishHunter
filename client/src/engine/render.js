@@ -3,15 +3,16 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
-// import { GUI } from "dat.gui";
+import { GUI } from "dat.gui";
 
 const bloom_params = {
   exposure: 0.2,
   bloomStrength: 0.2,//0.9,
   bloomThreshold: 0.18,//,0.5,
-  bloomRadius: 0
+  bloomRadius: 0.35
 };
 
+const USE_BLOOM = true;
 
 const loadShaders = async (v, f, others, loader) => {
   console.log(`v and f: ${v}, ${f}`);
@@ -50,7 +51,6 @@ const loadShaders = async (v, f, others, loader) => {
   toRet.push(others)
   return toRet;
 };
-
 export class RenderEngine {
   // canvas: Element;
   // scene: THREE.Scene;
@@ -62,13 +62,16 @@ export class RenderEngine {
   // sizes: any;
   // composer: any;
   // frame_start: any;
-  // timeTarget: any;
+  // timeTarget:any;
   // fps: number;
   // water_mat1: any;
   // water_mat2: any;
   // mat2texture: any;
 
-  constructor(canvas, sizes, env) {
+  constructor(
+    canvas, sizes, env
+    // canvas: Element, sizes: {width: number, height: number}, env: THREE.Group
+  ) {
     this.canvas = canvas;
     this.scene = new THREE.Scene();
     this.sizes = sizes;
@@ -76,17 +79,23 @@ export class RenderEngine {
     this.scene.add(env);
     let ambi_light_color = new THREE.Color(0xffffff);   //0x2a1a3a
     this.scene.add(new THREE.AmbientLight(ambi_light_color, 3.0));
-    // this.pointLight = new THREE.PointLight(0xffffff, 100);
-    // this.pointLight.position.set(0, 0, 100);
-    // this.scene.add(this.pointLight);
+    this.pointLight = new THREE.PointLight(0xffffff, 200);
+    this.pointLight.position.set(100, 10, 50);
+    const geometry = new THREE.SphereGeometry(10, 32, 16);
+    const lightMat = new THREE.MeshStandardMaterial({
+      emissive: new THREE.Color(0xFFA13C),
+      emissiveIntensity: 12000.0
+    })
+    let sphere = new THREE.Mesh(geometry, lightMat);
+    sphere.position.set(100, 200, 50);
+    this.scene.add(sphere);
+    this.scene.add(this.pointLight);
     // this.sunLight = new THREE.DirectionalLight(0xffffff, 10);
     // this.sunLight.position.set(0, 0, 1000);
     // // this.sunLight.rotation.x = Math.PI / 2;
     // this.scene.add(this.sunLight);
     this.camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 10000);
-    this.camera.position.x = 0;
-    this.camera.position.y = 0;
-    this.camera.position.z = 10;
+    this.camera.position.set(0, 10, 10);
     this.scene.add(this.camera);
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
     this.renderer.setSize(sizes.width, sizes.height);
@@ -95,51 +104,54 @@ export class RenderEngine {
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     this.renderer.physicallyCorrectLights = true;
+    if (USE_BLOOM === true) {
+      const renderScene = new RenderPass(this.scene, this.camera);
 
-    const renderScene = new RenderPass(this.scene, this.camera);
+      const bloomPass = new UnrealBloomPass(new THREE.Vector2(sizes.width, sizes.height), 1.5, 0.4, 0.85);
+      bloomPass.threshold = bloom_params.bloomThreshold;
+      bloomPass.strength = bloom_params.bloomStrength;
+      bloomPass.radius = bloom_params.bloomRadius;
 
-    const bloomPass = new UnrealBloomPass(new THREE.Vector2(sizes.width, sizes.height), 1.5, 0.4, 0.85);
-    bloomPass.threshold = bloom_params.bloomThreshold;
-    bloomPass.strength = bloom_params.bloomStrength;
-    bloomPass.radius = bloom_params.bloomRadius;
-
-    let composer = new EffectComposer(this.renderer);
-    composer.addPass(renderScene);
-    composer.addPass(bloomPass);
-    this.composer = composer;
-
-
-    // const createGUI = () => {
-    //   var gui = new GUI();
-    //   gui.add(bloom_params, 'exposure', 0.1, 2).onChange(function (value: any) {
-
-    //     this.renderer.toneMappingExposure = Math.pow(value, 4.0);
-
-    //   });
-
-    //   gui.add(bloom_params, 'bloomThreshold', 0.0, 1.0).onChange(function (value: any) {
-
-    //     bloomPass.threshold = Number(value);
-
-    //   });
-
-    //   gui.add(bloom_params, 'bloomStrength', 0.0, 3.0).onChange(function (value: any) {
-
-    //     bloomPass.strength = Number(value);
-
-    //   });
-
-    //   gui.add(bloom_params, 'bloomRadius', 0.0, 1.0).step(0.01).onChange(function (value: any) {
-
-    //     bloomPass.radius = Number(value);
-
-    //   });
+      let composer = new EffectComposer(this.renderer);
+      composer.addPass(renderScene);
+      composer.addPass(bloomPass);
+      this.composer = composer;
 
 
+      const createGUI = () => {
+        var gui = new GUI();
+        gui.add(bloom_params, 'exposure', 0.1, 2).onChange(function (value) {
 
-    //   gui.domElement.id = 'gui';
-    // }
-    // createGUI();
+          this.renderer.toneMappingExposure = Math.pow(value, 4.0);
+
+        });
+
+        gui.add(bloom_params, 'bloomThreshold', 0.0, 1.0).onChange(function (value) {
+
+          bloomPass.threshold = Number(value);
+
+        });
+
+        gui.add(bloom_params, 'bloomStrength', 0.0, 3.0).onChange(function (value) {
+
+          bloomPass.strength = Number(value);
+
+        });
+
+        gui.add(bloom_params, 'bloomRadius', 0.0, 1.0).step(0.01).onChange(function (value) {
+
+          bloomPass.radius = Number(value);
+
+        });
+
+
+
+        gui.domElement.id = 'gui';
+      }
+      createGUI();
+    }
+
+
 
 
 
@@ -406,7 +418,10 @@ export class RenderEngine {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(sizes.width, sizes.height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    this.composer.setSize(window.innerWidth, window.innerHeight);
+    if (USE_BLOOM) {
+      this.composer.setSize(window.innerWidth, window.innerHeight);
+    }
+    // this.composer.setSize( window.innerWidth, window.innerHeight );
   }
 
   renderLogic() {
@@ -422,13 +437,21 @@ export class RenderEngine {
         (0.3 / 1000) * (Date.now() - this.frame_start);
       plane_mat2.uniforms["texture1"].value = this.mat2texture;
     }
-    this.composer.render();
+    // this.composer.render();
+    if (USE_BLOOM) {
+      this.composer.render();
+    } else {
+      this.renderer.render(this.scene, this.camera);
+    }
+
+    // this.renderer
   }
 
   render() {
     // this.renderer.render(this.scene, this.camera);
     // Animation Loop
     this.renderLogic();
+
   }
 
 }

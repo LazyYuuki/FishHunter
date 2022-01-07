@@ -36,10 +36,10 @@ const loader = new three_examples_jsm_loaders_GLTFLoader_js__WEBPACK_IMPORTED_MO
         shape: new cannon_es__WEBPACK_IMPORTED_MODULE_2__.Box(new cannon_es__WEBPACK_IMPORTED_MODULE_2__.Vec3(halfExtents.x, halfExtents.y, halfExtents.z)),
         collisionResponse: false
       });
-      let startPos = charInfo.startPos;
+      // let startPos = charInfo.startPos;
       model.scale.setScalar(charInfo.scale);
-      model.position.copy(startPos);
-      body.position.set(startPos.x, startPos.y, startPos.z);
+      // model.position.copy(startPos);
+      // body.position.set(startPos.x, startPos.y, startPos.z);
       return new _character_js__WEBPACK_IMPORTED_MODULE_1__.Character(charInfo.name, charInfo, body, model);
     });
   },
@@ -55148,14 +55148,14 @@ class CharacterInfo {
   // halfExtents: THREE.Vector3;
 
   constructor(
-    name, mass, scale, startPos, halfExtents
+    name, mass, scale, halfExtents
     // name: string, mass: number, scale: number, startPos: THREE.Vector3, 
     //   halfExtents: THREE.Vector3
   ) {
     this.name = name;
     this.mass = mass;
     this.scale = scale;
-    this.startPos = startPos;
+    // this.startPos = startPos;
     this.halfExtents = halfExtents;
   }
 }
@@ -76375,28 +76375,28 @@ __webpack_require__.r(__webpack_exports__);
 
 const characterInfos = [
   new _model_character_js__WEBPACK_IMPORTED_MODULE_3__.CharacterInfo(
-    'catfishAnim', 10, 1, new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(0, 10, 0), new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(1, 1, 1)
+    'catfishAnim', 10, 1, new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(1, 1, 1)
   ),
   new _model_character_js__WEBPACK_IMPORTED_MODULE_3__.CharacterInfo(
-    'croc', 10, 1, new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(), new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(1, 1, 1)
+    'croc', 10, 1, new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(1, 1, 1)
   ),
   new _model_character_js__WEBPACK_IMPORTED_MODULE_3__.CharacterInfo(
-    'raft', 10, 10, new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(), new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(1, 1, 1)
+    'raft', 10, 10, new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(1, 1, 1)
   ),
   new _model_character_js__WEBPACK_IMPORTED_MODULE_3__.CharacterInfo(
-    'swordfish', 10, 1, new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(), new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(1, 1, 1)
+    'swordfish', 10, 1, new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(1, 1, 1)
   ),
   new _model_character_js__WEBPACK_IMPORTED_MODULE_3__.CharacterInfo(
-    'tuna', 10, 1, new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(), new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(1, 1, 1)
+    'tuna', 10, 1, new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(1, 1, 1)
   ),
   new _model_character_js__WEBPACK_IMPORTED_MODULE_3__.CharacterInfo(
-    'turtle', 10, 1, new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(), new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(1, 1, 1)
+    'turtle', 10, 1, new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(1, 1, 1)
   ),
   new _model_character_js__WEBPACK_IMPORTED_MODULE_3__.CharacterInfo(
-    'Derringer', 10, 1, new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(), new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(1, 1, 1)
+    'Derringer', 10, 1, new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(1, 1, 1)
   ),
   new _model_character_js__WEBPACK_IMPORTED_MODULE_3__.CharacterInfo(
-    'machi', 10, 1, new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(), new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(1, 1, 1)
+    'machi', 10, 1, new three__WEBPACK_IMPORTED_MODULE_6__.Vector3(1, 1, 1)
   ),
 ];
 
