@@ -15,15 +15,16 @@ app.use(express.static(clientPath));
 // Process on connection
 io.on("connection", socket => {
 
-  io.emit("chat message", "Socket " + socket.id + " just join")
+  io.emit("message", "Socket " + socket.id + " just join")
 
   socket.on("disconnect", () => {
-    io.emit("chat message", "Socket " + socket.id + " just left")
+    io.emit("message", "Socket " + socket.id + " just left")
   })
 
-  socket.on('chat message', (msg) => {
-    io.emit("chat message", msg)
-  });
+  socket.on("payload", payload => {
+    io.emit("message", JSON.stringify(payload))
+  })
+
 })
 
 server.listen(port, () => {

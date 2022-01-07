@@ -70852,24 +70852,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ server)
 /* harmony export */ });
 /* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
+/* harmony import */ var _userInput_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(41);
+
 
 
 var socket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_0__.io)();
 
-var form = document.getElementById('form');
-var input = document.getElementById('input');
+// var form = document.getElementById('form');
+// var input = document.getElementById('input');
 
 function server() {
 
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (input.value) {
-      socket.emit('chat message', input.value);
-      input.value = '';
-    }
-  });
+  // form.addEventListener('submit', function (e) {
+  //   e.preventDefault();
+  //   if (input.value) {
+  //     socket.emit('chat message', input.value);
+  //     input.value = '';
+  //   }
+  // });
 
-  socket.on('chat message', function (msg) {
+  (0,_userInput_js__WEBPACK_IMPORTED_MODULE_1__["default"])(socket)
+
+  socket.on('message', function (msg) {
     var item = document.createElement('li');
     item.textContent = msg;
     messages.appendChild(item);
@@ -74612,6 +74616,36 @@ Backoff.prototype.setJitter = function(jitter){
 };
 
 
+
+/***/ }),
+/* 41 */
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ userInputHandler)
+/* harmony export */ });
+/* harmony import */ var keyboardjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
+
+
+
+function userInputHandler(socket) {
+  keyboardjs__WEBPACK_IMPORTED_MODULE_0__.bind("w", () => {
+    socket.emit("payload", {
+      username: socket.id,
+      action: "w"
+    })
+  })
+
+  keyboardjs__WEBPACK_IMPORTED_MODULE_0__.bind("s", () => {
+    socket.emit("payload", {
+      username: socket.id,
+      action: "s"
+    })
+  })
+}
 
 /***/ })
 /******/ 	]);
