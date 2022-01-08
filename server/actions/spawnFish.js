@@ -38,7 +38,7 @@ export default function spawnFish(socket) {
   socket.emit('client', {
     action: 'spawnFish',
     payload: {
-      ...payload,
+      ...payload.payload,
       type: fishType[getRandomIntInclusive(0, 4)],
     }
   });

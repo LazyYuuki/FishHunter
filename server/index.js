@@ -8,7 +8,8 @@ const app = express()
 const server = http.createServer(app)
 const io = new Server(server)
 
-const clientPath = '../dist_test'
+// const clientPath = '../dist_test'
+const clientPath = '../dist'
 
 // Send the client package to client
 app.use(express.static(clientPath));
