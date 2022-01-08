@@ -7,7 +7,7 @@ const app = express()
 const server = http.createServer(app)
 const io = new Server(server)
 
-const clientPath = '../dist'
+const clientPath = '../dist_test'
 
 // Define a queue structure
 function Queue() {
@@ -47,7 +47,6 @@ io.on("connection", socket => {
   })
 
   socket.on("payload", payload => {
-    console.log(serverQueue)
     io.emit("message", JSON.stringify(payload))
   })
 

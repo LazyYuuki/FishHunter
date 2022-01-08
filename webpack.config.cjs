@@ -4,7 +4,7 @@ module.exports = {
   "mode": "none",
   "entry": "./client/src/main.js",
   "output": {
-    "path": __dirname + '/dist',
+    "path": __dirname + '/dist_test',
     "filename": "bundle.js"
   },
   devServer: {

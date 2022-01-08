@@ -16,7 +16,7 @@
     "three": "^0.136.0"
   },
   "scripts": {
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --config webpack.config.cjs"
   },
   "devDependencies": {
     "nodemon": "^2.0.15",
