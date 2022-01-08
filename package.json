@@ -7,8 +7,6 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "cannon-es": "^0.18.0",
-    "dat.gui": "^0.7.7",
     "express": "^4.17.2",
     "keyboardjs": "^2.6.4",
     "socket.io": "^4.4.1",
